@@ -14,8 +14,8 @@
   [user-id]
   (let [token (gen-session-id)]
     (insert e/auth-tokens
-      (values {:id token
-               :user_id user-id}))
+            (values {:id      token
+                     :user_id user-id}))
     token))
 
 (defn authenticate-token
@@ -32,12 +32,12 @@
 
 (defn unauthorized-handler [req msg]
   {:status 401
-   :body {:status :error
-          :message (or msg "User not authorized")}})
+   :body   {:status  :error
+            :message (or msg "User not authorized")}})
 
 ;; Looks for an "Authorization" header with a value of "Token XXX"
 ;; where "XXX" is some valid token.
-(def auth-backend (token-backend {:authfn authenticate-token
+(def auth-backend (token-backend {:authfn               authenticate-token
                                   :unauthorized-handler unauthorized-handler}))
 
 ;; Map of actions to the set of user types authorized to perform that action
